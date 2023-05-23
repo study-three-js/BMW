@@ -36,7 +36,7 @@ function App() {
     containerRef.current?.appendChild(renderer.domElement)
 
     animate()
-  })
+  }, [])
   return (
     <>
       <div className='home'>
