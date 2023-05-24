@@ -8,30 +8,29 @@ import carFun from './hooks/car'
 
 import { useState } from "react";
 
+/**
+ * ！！！必须放外部，放里面useState会重新渲染界面
+ */
+const { scene, camera, renderer, controls } = initFun(THREE)
+const { colors, materials } = hooks()
+const { bodyMaterial, frontMaterial, hoodMaterial, wheelsMaterial } = carFun(THREE, scene)
+
 function App() {
-
-  const { scene, camera, renderer, controls } = initFun(THREE)
-  const { colors, materials } = hooks()
-  const { bodyMaterial, frontMaterial, hoodMaterial, wheelsMaterial, glassMaterial } = carFun(THREE, scene)
-
   //选择车身颜色
   const [colorIndex, setColorIndex] = useState(0)
   const selColor = (index: number) => {
     setColorIndex(index)
-    console.log(colors[index], bodyMaterial.color, bodyMaterial);
 
     bodyMaterial.color.set(colors[index]);
     frontMaterial.color.set(colors[index]);
     hoodMaterial.color.set(colors[index]);
     wheelsMaterial.color.set(colors[index]);
-    glassMaterial.color.set(colors[index]);
+    // glassMaterial.color.set(colors[index]);
   }
   //选择贴膜材质
   const [materialIndex, setMaterialIndex] = useState(0)
   const selMaterial = (index: number) => {
     setMaterialIndex(index)
-    console.log(materials[index]);
-
 
     bodyMaterial.clearcoatRoughness = materials[index].value;
     frontMaterial.clearcoatRoughness = materials[index].value;
@@ -51,6 +50,8 @@ function App() {
 
     animate()
   }, [])
+
+
   return (
     <>
       <div className='home'>

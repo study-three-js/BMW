@@ -3,12 +3,6 @@ import { Scene } from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
-/**
- * @description 优化后的代码
- * @param THREE 
- * @param scene 
- * @returns 
- */
 const carFun = (THREE: typeof import("three"), scene: Scene) => {
   // 添加地面网格
   const gridHelper = new THREE.GridHelper(10, 10)
@@ -38,20 +32,33 @@ const carFun = (THREE: typeof import("three"), scene: Scene) => {
   // const wheels = []; // 汽车轮毂  
   // let cartBody, frontCar, hoodCar, glassCar;// cartBody-车身 frontCar-前脸 hoodCar-引擎盖 glassCar-挡风玻璃
   // 创建材质
-  const material = {
+  // 车身
+  const bodyMaterial = new THREE.MeshPhysicalMaterial({
     color: 0xff0000,
     metalness: 1,
     roughness: 0.5,
     // 清洁度
     clearcoat: 1,
     clearcoatRoughness: 0,
-  }
-  // 车身
-  const bodyMaterial = new THREE.MeshPhysicalMaterial({ ...material })
+  })
   // 前脸
-  const frontMaterial = new THREE.MeshPhysicalMaterial({ ...material })
+  const frontMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xff0000,
+    metalness: 1,
+    roughness: 0.5,
+    // 清洁度
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+  })
   // 引擎盖
-  const hoodMaterial = new THREE.MeshPhysicalMaterial({ ...material })
+  const hoodMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0xff0000,
+    metalness: 1,
+    roughness: 0.5,
+    // 清洁度
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+  })
   // 汽车轮毂
   const wheelsMaterial = new THREE.MeshPhysicalMaterial({
     color: 0xff0000,
@@ -68,18 +75,6 @@ const carFun = (THREE: typeof import("three"), scene: Scene) => {
   })
 
 
-  interface MaterialMap {
-    [key: string]: THREE.Material
-  }
-
-  // 材质映射表
-  const materialMap: MaterialMap = {
-    '轮毂': wheelsMaterial,
-    'Mesh002': bodyMaterial,
-    '前脸': frontMaterial,
-    '引擎盖_1': hoodMaterial,
-    '挡风玻璃': glassMaterial
-  }
 
   // 加载模型
   // 这里报错把 three.js换成^0.137.5 版本
@@ -93,14 +88,30 @@ const carFun = (THREE: typeof import("three"), scene: Scene) => {
         child.castShadow = true
         child.receiveShadow = true
 
-        const name = child.name
-
-        // 根据名称设置材质
-        for (const key in materialMap) {
-          if (name.includes(key)) {
-            child.material = materialMap[key]
-            break
-          }
+        // 判断是否是轮毂
+        if (child.name.includes('轮毂')) {
+          child.material = wheelsMaterial
+          // wheels.push(child)
+        }
+        // 判断是否是车身
+        if (child.name.includes('Mesh002')) {
+          child.material = bodyMaterial
+          // cartBody = child
+        }
+        // 判断是否是前脸
+        if (child.name.includes('前脸')) {
+          child.material = frontMaterial
+          // frontCar = child
+        }
+        // 判断是否是引擎盖
+        if (child.name.includes('引擎盖_1')) {
+          child.material = hoodMaterial
+          // hoodCar = child
+        }
+        // 判断是否是挡风玻璃
+        if (child.name.includes('挡风玻璃')) {
+          child.material = glassMaterial
+          // glassCar = child
         }
       }
     })
