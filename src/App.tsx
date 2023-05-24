@@ -12,7 +12,7 @@ function App() {
 
   const { scene, camera, renderer, controls } = initFun(THREE)
   const { colors, materials } = hooks()
-  const { bodyMaterial, frontMaterial, hoodMaterial, wheelsMaterial, glassMaterial, carRenderer } = carFun(THREE, scene)
+  const { bodyMaterial, frontMaterial, hoodMaterial, wheelsMaterial, glassMaterial } = carFun(THREE, scene)
 
   //选择车身颜色
   const [colorIndex, setColorIndex] = useState(0)
@@ -50,8 +50,6 @@ function App() {
     containerRef.current?.appendChild(renderer.domElement)
 
     animate()
-
-    carRenderer()
   }, [])
   return (
     <>
