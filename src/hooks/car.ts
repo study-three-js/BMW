@@ -61,7 +61,7 @@ const carFun = (THREE: typeof import("three"), scene: Scene) => {
   // 挡风玻璃
   const glassMaterial = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    transmission: 1, //完全通透
+    transmission: 0.9, //1表示完全通透
     transparent: true, //设置透明
     metalness: 0,
     roughness: 0,
