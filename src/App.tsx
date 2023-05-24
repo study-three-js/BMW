@@ -9,7 +9,7 @@ import carFun from './hooks/car'
 import { useState } from "react";
 
 /**
- * ！！！必须放外部，放里面useState会重新渲染界面
+ * ⚠！！！必须放外部，放里面useState会重新渲染界面
  */
 const { scene, camera, renderer, controls } = initFun(THREE)
 const { colors, bodyMa, glassMa } = hooks()
