@@ -7,7 +7,7 @@ const initFun = (THREE: typeof import("three")) => {
     75,
     window.innerWidth / window.innerHeight,
     0.1,
-    1000
+    100
   )
   camera.position.set(0, 2, 6)
   scene.add(camera)
@@ -33,7 +33,9 @@ const initFun = (THREE: typeof import("three")) => {
   });
 
   const controls = new OrbitControls(camera, renderer.domElement)
+  controls.target.set(0, 0, 0);
   controls.enableDamping = true
+  // controls.maxDistance = 160;
 
   // 设置z轴第一盏灯光
   const light1 = new THREE.DirectionalLight(0xffffff, 1);
@@ -73,6 +75,9 @@ const initFun = (THREE: typeof import("three")) => {
   const light9 = new THREE.DirectionalLight(0xffffff, 0.3);
   light9.position.set(-5, 10, 0);
   scene.add(light9);
+
+  // 雾化效果
+  scene.fog = new THREE.Fog("#ccc", 10, 15);
 
   return {
     scene,
